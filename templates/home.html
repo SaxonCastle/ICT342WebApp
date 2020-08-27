@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     {% if title %}
         <title>Web App - {{ title }}</title>
@@ -9,6 +9,47 @@
 
 <style>
 
+
+    /* Split the screen in half */
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Control the left side */
+.left {
+  left: 0;
+  background-color: #111;
+}
+
+/* Control the right side */
+.right {
+  right: 0;
+  background-color: #ff447e;
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* Style the image inside the centered container, if needed */
+.centered img {
+  width: 150px;
+  border-radius: 50%;
+}
+
+
+
     /*-------------------------
         DROP DOWN BOX STYLES
     -------------------------*/
@@ -16,14 +57,16 @@
 .dropbtn {
   background-color: #4CAF50;
   color: white;
+    margin-top: 16px;
   padding: 16px;
   font-size: 16px;
   border: none;
 }
 
 .dropdown {
+    margin: 16px;
   position: relative;
-  display: inline-block;
+  display: inline-flex;
 }
 
 .dropdown-content {
@@ -54,7 +97,7 @@
     -------------------------*/
 
     .slidecontainer {
-  width: 20%; /* Width of the outside container */
+  width: 50%; /* Width of the outside container */
 }
 
 /* The slider itself */
@@ -92,11 +135,29 @@
   cursor: pointer; /* Cursor on hover */
 }
 
+    /*-------------------------
+         TEXT  STYLES
+  -------------------------*/
+
+
+.color {
+    color: #4CAF50;
+}
+
 </style>
 
 </head>
 <body>
-    <h1>Please Select Variables To Alter</h1>
+
+{#                               #}
+{#        LEFT HAND SIDE         #}
+{#                               #}
+
+<div class="split left">
+    <div class="centered">
+        <div class="left color">
+            <h1>Please Select Variables To Alter</h1>
+        </div>
 
 
 {#                               #}
@@ -140,7 +201,9 @@
 
     <div class="slidecontainer">
         <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-        <p>Packet Size: <span id="demo"></span></p>
+            <div class="left color">
+                <p>Packet Size: <span id="demo"></span></p>
+            </div>
     </div>
 
     <script>
@@ -158,8 +221,11 @@
 {#                               #}
 
     <form>
+        <div class="left color">
       <label for="myfile">Select a file:</label>
+
       <input type="file" id="myfile" name="myfile"><br><br>
+        </div>
 {#      <input type="submit">#}
     </form>
 
@@ -168,5 +234,35 @@
 {#                               #}
 
     <button>Begin Test</button>
+    </div>
+</div>
+
+{#                               #}
+{#       RIGHT HAND SIDE         #}
+{#                               #}
+
+<div class="split right">
+    <div class="centered">
+        <h1>Results will print here</h1>
+        <h3>Sent from: Brisbane</h3>
+        <h3>Sent to: Texas</h3>
+        <br>
+        <br>
+        <h3>Protocol Used: FTP</h3>
+        <h3>Average Ping: 200ms</h3>
+        <h3>Packet Size: 60mb</h3>
+        <h3>Time to Complete: 72 seconds</h3>
+        <h3>Packet Drop: 99%</h3>
+
+
+        <form>
+            <input type="checkbox" id="DownloadCSV" name="downloadToCSV" value="CSV">
+            <label for="DownloadCSV">Download to CSV</label><br>
+            <button>Download</button>
+        </form>
+
+    </div>
+</div>
+
 </body>
 </html>
