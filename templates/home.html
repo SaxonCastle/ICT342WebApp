@@ -24,13 +24,13 @@
 /* Control the left side */
 .left {
   left: 0;
-  background-color: #111;
+  background-color: #000;
 }
 
 /* Control the right side */
 .right {
   right: 0;
-  background-color: #ff447e;
+  background-color: #cefffd;
 }
 
 /* If you want the content centered horizontally and vertically */
@@ -97,7 +97,7 @@
     -------------------------*/
 
     .slidecontainer {
-  width: 50%; /* Width of the outside container */
+  width: 60%; /* Width of the outside container */
 }
 
 /* The slider itself */
@@ -111,6 +111,7 @@
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
   -webkit-transition: .2s; /* 0.2 seconds transition on hover */
   transition: opacity .2s;
+    position: center;
 }
 
 /* Mouse-over effects */
@@ -144,14 +145,33 @@
     color: #4CAF50;
 }
 
+p {
+  font-size: 30px;
+}
+
+
+label {
+    font-size: 30px;
+}
+
+button {
+    border: none;
+    color: #4CAF50;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+}
+
 </style>
 
 </head>
 <body>
 
-{#                               #}
+{#*******************************#}
 {#        LEFT HAND SIDE         #}
-{#                               #}
+{#*******************************#}
 
 <div class="split left">
     <div class="centered">
@@ -165,34 +185,35 @@
 {#                               #}
 
     <div class="dropdown">
-        <button class="dropbtn">Select Protocol</button>
-        <div class="dropdown-content">
-            <a href="#">TCP</a>
-            <a href="#">STCP</a>
-            <a href="#">SCP</a>
+            <button class="dropbtn">Select Protocol</button>
+            <div class="dropdown-content">
+                <a href="#">TCP</a>
+                <a href="#">STCP</a>
+                <a href="#">SCP</a>
+            </div>
         </div>
-    </div>
-
+        <br>
 
     <div class="dropdown">
-    <button class="dropbtn">Starting Server</button>
-        <div class="dropdown-content">
-            <a href="#">Brisbane?</a>
-            <a href="#">Singapore</a>
-            <a href="#">Texas</a>
+        <button class="dropbtn">Starting Server</button>
+            <div class="dropdown-content">
+                <a href="#">Sydney</a>
+                <a href="#">Singapore</a>
+                <a href="#">Texas</a>
+            </div>
         </div>
-    </div>
 
-    <div>
-        <div class="dropdown">
-        <button class="dropbtn">End Server</button>
-        <div class="dropdown-content">
-            <a href="#">Brisbane?</a>
-            <a href="#">Singapore</a>
-            <a href="#">Texas</a>
+    <div class="dropdown">
+            <button class="dropbtn">End Server</button>
+            <div class="dropdown-content">
+                <a href="#">Sydney</a>
+                <a href="#">Singapore</a>
+                <a href="#">Texas</a>
+            </div>
         </div>
-    </div>
-    </div>
+    <br>
+    <br>
+
 
 
 {#                               #}
@@ -222,9 +243,9 @@
 
     <form>
         <div class="left color">
-      <label for="myfile">Select a file:</label>
+            <label for="myfile">Select a file:</label>
 
-      <input type="file" id="myfile" name="myfile"><br><br>
+            <input type="file" id="myfile" name="myfile"><br><br>
         </div>
 {#      <input type="submit">#}
     </form>
@@ -233,13 +254,19 @@
 {#         BEGIN TEST CODE       #}
 {#                               #}
 
-    <button>Begin Test</button>
+    <form action="/buttonClick/" method="post">
+        <button name="beginButton" type="submit">Begin Test</button>
+    </form>
+
+
+
+
     </div>
 </div>
 
-{#                               #}
+{#*******************************#}
 {#       RIGHT HAND SIDE         #}
-{#                               #}
+{#*******************************#}
 
 <div class="split right">
     <div class="centered">
@@ -251,9 +278,8 @@
         <h3>Protocol Used: FTP</h3>
         <h3>Average Ping: 200ms</h3>
         <h3>Packet Size: 60mb</h3>
-        <h3>Time to Complete: 72 seconds</h3>
+        <h3>Time to Complete: {{ running_test }} </h3>
         <h3>Packet Drop: 99%</h3>
-
 
         <form>
             <input type="checkbox" id="DownloadCSV" name="downloadToCSV" value="CSV">
@@ -262,6 +288,10 @@
         </form>
 
     </div>
+
+
+
+
 </div>
 
 </body>
