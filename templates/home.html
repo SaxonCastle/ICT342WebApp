@@ -6,8 +6,18 @@
     {% else %}
         <title> Web App </title>
     {% endif %}
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 
 <style>
+
+    /*-------------------------
+        COLOURSSS
+    #F5CCD8  LIGHT PINK
+    #6A97B4  LIGHT BLUE
+    #282A3E  SPACE CADET
+    #fffafa  SNOW  WHITE
+    -------------------------*/
+
 
 
     /* Split the screen in half */
@@ -24,13 +34,13 @@
 /* Control the left side */
 .left {
   left: 0;
-  background-color: #000;
+  background-color: #6A97B4;
 }
 
 /* Control the right side */
 .right {
   right: 0;
-  background-color: #cefffd;
+  background-color: #F5CCD8;
 }
 
 /* If you want the content centered horizontally and vertically */
@@ -40,6 +50,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
+  align-items: center;
+}
+
+.flex-container{
+	display: flex;
+	flex-wrap: wrap;
 }
 
 /* Style the image inside the centered container, if needed */
@@ -55,8 +71,8 @@
     -------------------------*/
 
 .dropbtn {
-  background-color: #4CAF50;
-  color: white;
+  background-color: #282A3E;
+  color: #fffafa;
     margin-top: 16px;
   padding: 16px;
   font-size: 16px;
@@ -72,7 +88,7 @@
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
+  background-color: #fffafa;
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -85,11 +101,16 @@
   display: block;
 }
 
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {background-color: #fffafa;}
 
 .dropdown:hover .dropdown-content {display: block;}
 
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+.dropdown:hover .dropbtn {background-color: #282A3E;}
+
+.beginButton:hover {
+    color: #fffafa;
+    background-color:#282A3E;
+}
 
 
     /*-------------------------
@@ -97,7 +118,7 @@
     -------------------------*/
 
     .slidecontainer {
-  width: 60%; /* Width of the outside container */
+  width: 70%; /* Width of the outside container */
 }
 
 /* The slider itself */
@@ -106,12 +127,13 @@
   appearance: none;
   width: 100%; /* Full-width */
   height: 25px; /* Specified height */
-  background: #d3d3d3; /* Grey background */
+  background: #fffafa; /* Snow background */
   outline: none; /* Remove outline */
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
   -webkit-transition: .2s; /* 0.2 seconds transition on hover */
   transition: opacity .2s;
-    position: center;
+  position: center;
+  align-items: center;
 }
 
 /* Mouse-over effects */
@@ -125,14 +147,14 @@
   appearance: none;
   width: 25px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
-  background: #4CAF50; /* Green background */
+  background: #282A3E; /* Dark Blue background */
   cursor: pointer; /* Cursor on hover */
 }
 
 .slider::-moz-range-thumb {
   width: 25px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
-  background: #4CAF50; /* Green background */
+  background: #282A3E; /* Dark Blue background */
   cursor: pointer; /* Cursor on hover */
 }
 
@@ -140,9 +162,12 @@
          TEXT  STYLES
   -------------------------*/
 
-
+body {
+	font-family: roboto;
+	font: 'roboto slab';
+}
 .color {
-    color: #4CAF50;
+    color: #282A3E;
 }
 
 p {
@@ -156,117 +181,100 @@ label {
 
 button {
     border: none;
-    color: #4CAF50;
+    color: #282A3E;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 24px;
+    border-radius: 6%;
 }
-
 </style>
-
 </head>
+
 <body>
 
-{#*******************************#}
+<!--{#*******************************#}
 {#        LEFT HAND SIDE         #}
-{#*******************************#}
+{#*******************************#}-->
 
-<div class="split left">
-    <div class="centered">
-        <div class="left color">
-            <h1>Please Select Variables To Alter</h1>
-        </div>
-
-
-{#                               #}
-{#         DROPDOWN BOX CODE     #}
-{#                               #}
-
-    <div class="dropdown">
-            <button class="dropbtn">Select Protocol</button>
-            <div class="dropdown-content">
-                <a href="#">TCP</a>
-                <a href="#">STCP</a>
-                <a href="#">SCP</a>
-            </div>
-        </div>
-        <br>
-
-    <div class="dropdown">
-        <button class="dropbtn">Starting Server</button>
-            <div class="dropdown-content">
-                <a href="#">Sydney</a>
-                <a href="#">Singapore</a>
-                <a href="#">Texas</a>
-            </div>
-        </div>
-
-    <div class="dropdown">
-            <button class="dropbtn">End Server</button>
-            <div class="dropdown-content">
-                <a href="#">Sydney</a>
-                <a href="#">Singapore</a>
-                <a href="#">Texas</a>
-            </div>
-        </div>
-    <br>
-    <br>
-
-
-
-{#                               #}
-{#         SLIDER CODE           #}
-{#                               #}
-
-    <div class="slidecontainer">
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+<div class="flex-container">
+    <div class="split left">
+        <div class="centered">
             <div class="left color">
-                <p>Packet Size: <span id="demo"></span></p>
+                <h1>Please Select Variables To Alter</h1>
             </div>
-    </div>
 
-    <script>
-        var slider = document.getElementById("myRange");
-        var output = document.getElementById("demo");
-        output.innerHTML = slider.value;
 
-        slider.oninput = function() {
-            output.innerHTML = this.value;
-        }
-    </script>
+    <!--{#                               #}
+    {#         DROPDOWN BOX CODE     #}
+    {#                               #}-->
+                <div class="dropdown">
+                        <button class="dropbtn">Select Protocol</button>
+                        <div class="dropdown-content">
+                            <a href="#">TCP</a>
+                            <a href="#">STCP</a>
+                            <a href="#">SCP</a>
+                        </div>
+                </div>
+                    <br>
+                <div class="dropdown">
+                    <button class="dropbtn">Select Server</button>
+                        <div class="dropdown-content">
+                            <a href="#">Sydney</a>
+                            <a href="#">Singapore</a>
+                            <a href="#">Texas</a>
+                        </div>
+                    </div>
 
-{#                               #}
-{#         UPLOAD FILE CODE      #}
-{#                               #}
+    <!--{#                               #}
+    {#         SLIDER CODE           #}
+    {#                               #}-->
 
-    <form>
-        <div class="left color">
-            <label for="myfile">Select a file:</label>
-
-            <input type="file" id="myfile" name="myfile"><br><br>
+        <div class="slidecontainer">
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+                <div class="left color">
+                    <p>Packet Size: <span id="demo"></span></p>
+                </div>
         </div>
-{#      <input type="submit">#}
-    </form>
 
-{#                               #}
-{#         BEGIN TEST CODE       #}
-{#                               #}
+        <script>
+            var slider = document.getElementById("myRange");
+            var output = document.getElementById("demo");
+            output.innerHTML = slider.value;
 
-    <form action="/buttonClick/" method="post">
-        <button name="beginButton" type="submit">Begin Test</button>
-    </form>
+            slider.oninput = function() {
+                output.innerHTML = this.value;
+            }
+        </script>
 
+    <!--{#                               #}
+    {#         UPLOAD FILE CODE      #}
+    {#                               #}-->
 
+        <form>
+            <div class="left color">
+                <label for="myfile">Select a file:</label>
 
+                <input type="file" id="myfile" name="myfile"><br><br>
+            </div>
+            <input type="submit">
+        </form>
 
+    <!--{#                               #}
+    {#         BEGIN TEST CODE       #}
+    {#                               #}-->
+
+        <form action="/buttonClick/" method="post">
+            <button name="beginButton" class="beginButton"type="submit">Begin Test</button>
+        </form>
+        </div>
     </div>
 </div>
 
-{#*******************************#}
+<!--{#*******************************#}
 {#       RIGHT HAND SIDE         #}
-{#*******************************#}
+{#*******************************#}-->
 
 <div class="split right">
     <div class="centered">
@@ -284,15 +292,10 @@ button {
         <form>
             <input type="checkbox" id="DownloadCSV" name="downloadToCSV" value="CSV">
             <label for="DownloadCSV">Download to CSV</label><br>
-            <button>Download</button>
+            <button class= "beginButton">Download</button>
         </form>
 
     </div>
-
-
-
-
 </div>
-
 </body>
 </html>
