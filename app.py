@@ -25,8 +25,7 @@ def begin_test():
     session.quit()
     time_taken = end - start
     running_test = round(time_taken, 3)
-    return render_template('home.html', running_test=running_test);
-
+    return render_template('home.html', running_test=running_test)
 
 
 if __name__ == '__main__':
