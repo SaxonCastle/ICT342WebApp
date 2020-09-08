@@ -206,69 +206,66 @@ button {
                 <h1>Please Select Variables To Alter</h1>
             </div>
 
+            <form action="/buttonClick/" method="post">
 
     <!--{#                               #}
     {#         DROPDOWN BOX CODE     #}
     {#                               #}-->
                 <div class="dropdown">
-                        <button class="dropbtn">Select Protocol</button>
-                        <div class="dropdown-content">
-                            <a href="#">TCP</a>
-                            <a href="#">STCP</a>
-                            <a href="#">SCP</a>
-                        </div>
+                        <label for="protocol" >Select Protocol</label>
+                        <select id="protocol" name="protocol">
+                            <option value="TCP">TCP</option>
+                            <option value="STCP">STCP</option>
+                            <option value="SCP">SCP</option>
+                        </select>
                 </div>
                     <br>
                 <div class="dropdown">
-                    <button class="dropbtn">Select Server</button>
-                        <div class="dropdown-content">
-                            <a href="#">Sydney</a>
-                            <a href="#">Singapore</a>
-                            <a href="#">Texas</a>
-                        </div>
-                    </div>
+                    <label for="server" >Select Server</label>
+                    <select id="server" name="server">
+                        <option value="172.105.191.25">Sydney</option>
+                        <option value="139.162.15.145">Singapore</option>
+                        <option value="45.33.27.236">Texas</option>
+                    </select>
+                </div>
 
     <!--{#                               #}
     {#         SLIDER CODE           #}
     {#                               #}-->
 
-        <div class="slidecontainer">
-            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-                <div class="left color">
-                    <p>Packet Size: <span id="demo"></span></p>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="packet">
+                        <div class="left color">
+                            <p>Packet Size: <span id="demo"></span></p>
+                        </div>
                 </div>
-        </div>
 
-        <script>
-            var slider = document.getElementById("myRange");
-            var output = document.getElementById("demo");
-            output.innerHTML = slider.value;
+                <script>
+                    var slider = document.getElementById("myRange");
+                    var output = document.getElementById("demo");
+                    output.innerHTML = slider.value;
 
-            slider.oninput = function() {
-                output.innerHTML = this.value;
-            }
-        </script>
+                    slider.oninput = function() {
+                        output.innerHTML = this.value;
+                    }
+                </script>
 
     <!--{#                               #}
     {#         UPLOAD FILE CODE      #}
     {#                               #}-->
 
-        <form>
-            <div class="left color">
-                <label for="myfile">Select a file:</label>
+                <div class="left color">
+                    <label for="myfile">Select a file:</label>
 
-                <input type="file" id="myfile" name="myfile"><br><br>
-            </div>
-            <input type="submit">
-        </form>
+                    <input type="file" id="myfile" name="myfile"><br><br>
+                </div>
 
     <!--{#                               #}
     {#         BEGIN TEST CODE       #}
     {#                               #}-->
 
-        <form action="/buttonClick/" method="post">
-            <button name="beginButton" class="beginButton"type="submit">Begin Test</button>
-        </form>
+                <button name="beginButton" class="beginButton"type="submit">Begin Test</button>
+            </form>
         </div>
     </div>
 </div>
@@ -280,13 +277,14 @@ button {
 <div class="split right">
     <div class="centered">
         <h1>Results will print here</h1>
-        <h3>Sent from: Brisbane</h3>
-        <h3>Sent to: Texas</h3>
+        <h3>File name: </h3>
+        <h3>Sent to: {{ server_location }}</h3>
+        <h3>Server ip: {{ server }}</h3>
+        <h3>Network status: </h3>
         <br>
-        <br>
-        <h3>Protocol Used: FTP</h3>
+        <h3>Protocol Used: {{ protocol }}</h3>
         <h3>Average Ping: 200ms</h3>
-        <h3>Packet Size: 60mb</h3>
+        <h3>Packet Size: {{ packet_size }}</h3>
         <h3>Time to Complete: {{ running_test }} </h3>
         <h3>Packet Drop: 99%</h3>
 
