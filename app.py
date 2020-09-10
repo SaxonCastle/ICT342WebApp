@@ -4,8 +4,8 @@ import time
 
 #domain name or server ip:
 session = ftplib.FTP()
-session.connect('45.33.27.236', 2121)
-session.login('user','password')
+session.connect('139.162.15.145', 2121)
+session.login('user', 'password')
 
 app = Flask(__name__)
 
@@ -24,22 +24,26 @@ def begin_test():
 
     if server == "172.105.191.25":
         server_location = "Sydney"
+
     elif server == "139.162.15.145":
         server_location = "Singapore"
+
     elif server == "45.33.27.236":
         server_location = "Texas"
+
     else:
         server_location = "Unknown"
 
     filename = 'texttest.txt'
     start = time.perf_counter()
-    session.storbinary('STOR '+filename, open(filename, 'rb'))
+    session.storbinary('STOR ' + filename, open(filename, 'rb'))
     end = time.perf_counter()
     session.quit()
     time_taken = end - start
     running_test = round(time_taken, 3)
     return render_template('home.html', running_test=running_test, protocol=protocol, server=server,
                            server_location=server_location, packet_size=packet_size)
+
 
 
 if __name__ == '__main__':
