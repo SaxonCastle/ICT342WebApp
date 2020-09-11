@@ -34,17 +34,22 @@ def begin_test():
     else:
         server_location = "Unknown"
 
-    filename = 'texttest.txt'
-    start = time.perf_counter()
-    session.storbinary('STOR ' + filename, open(filename, 'rb'))
-    end = time.perf_counter()
-    session.quit()
-    time_taken = end - start
-    running_test = round(time_taken, 3)
-    return render_template('home.html', running_test=running_test, protocol=protocol, server=server,
-                           server_location=server_location, packet_size=packet_size)
+    if protocol == "FTP":
+        filename = 'texttest.txt'
+        start = time.perf_counter()
+        session.storbinary('STOR ' + filename, open(filename, 'rb'))
+        end = time.perf_counter()
+        session.quit()
+        time_taken = end - start
+        running_test = round(time_taken, 3)
+        return render_template('home.html', running_test=running_test, protocol=protocol, server=server,
+                               server_location=server_location, packet_size=packet_size)
 
+    elif protocol == "STCP":
+        filename = 'texttest.txt'
 
+    else:
+        filename = 'texttest.txt'
 
 if __name__ == '__main__':
     app.run(debug=True)
