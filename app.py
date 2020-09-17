@@ -6,7 +6,7 @@ import time
 try:
     session = ftplib.FTP()
     session.connect('139.162.15.145', 2121)
-    session.login('user', 'password')
+    session.login('---', '---')
     print("Login to " + str(139) + " Successful")
 except:
     print("Login Failed")
@@ -23,6 +23,7 @@ def home():
 
 @app.route("/buttonClick/", methods=['POST'])
 def begin_test():
+    print("Begin Button Pushed")
     protocol = request.form['protocol']
     server = request.form['server']
     packet_size = request.form['packet']
