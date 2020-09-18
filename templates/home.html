@@ -283,10 +283,10 @@ button {
         <h3>Network status: </h3>
         <br>
         <h3>Protocol Used: {{ protocol }}</h3>
-        <h3>Average Ping: 200ms</h3>
+        <h3>Average Ping: {{ ping_avg }} ms</h3>
         <h3>Packet Size: {{ packet_size }}</h3>
         <h3>Time to Complete: {{ running_test }} </h3>
-        <h3>Packet Drop: 99%</h3>
+
 
         <form>
             <input type="checkbox" id="DownloadCSV" name="downloadToCSV" value="CSV">
