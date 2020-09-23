@@ -5,6 +5,14 @@ import time
 
 app = Flask(__name__)
 
+#Define varibles
+protocol = ""
+server = ""
+packet_size = 0
+filename = 'texttest.txt'
+ping_avg = 0
+running_test = 0.0
+
 
 @app.route('/')
 @app.route('/home')
@@ -14,10 +22,17 @@ def home():
 
 @app.route("/buttonClick/", methods=['POST'])
 def begin_test():
-    protocol = request.form['protocol']
-    server = request.form['server']
-    packet_size = request.form['packet']
 
+    #Make varibles global and set values accoridly to HTML webpage
+    global protocol
+    protocol = request.form['protocol']
+    global server
+    server = request.form['server']
+    global packet_size
+    packet_size = request.form['packet']
+    global filename
+    filename = 'texttest.txt'
+    global running_test
     running_test = 0.0
 
     if server == "172.105.191.25":
@@ -31,6 +46,36 @@ def begin_test():
     else:
         server_location = "Unknown"
 
+    #ping()
+    global ping_avg
+    response_list = ping(server, size=32, count=3)
+    ping_avg = response_list.rtt_avg_ms
+    print(ping_avg)
+
+    if protocol == "FTP":
+        start = time.perf_counter()
+        ftp()
+        end = time.perf_counter()
+        time_taken = end - start
+        running_test = round(time_taken, 3)
+    elif protocol == "STCP":
+        start = time.perf_counter()
+        stcp()
+        end = time.perf_counter()
+        time_taken = end - start
+        running_test = round(time_taken, 3)
+    elif protocol == "SCP":
+        start = time.perf_counter()
+        scp()
+        end = time.perf_counter()
+        time_taken = end - start
+        running_test = round(time_taken, 3)
+
+    return render_template('home.html', running_test=running_test, protocol=protocol, server=server,
+                           server_location=server_location, packet_size=packet_size, ping_avg=ping_avg)
+
+
+def ftp():
     # domain name or server ip:
     try:
         session = ftplib.FTP()
@@ -40,20 +85,24 @@ def begin_test():
     except:
         print("Login Failed")
 
-    response_list = ping(server, size=32, count=3)
-    ping_avg = response_list.rtt_avg_ms
-    print(ping_avg)
-
-    filename = 'texttest.txt'
-    start = time.perf_counter()
     session.storbinary('STOR ' + filename, open(filename, 'rb'))
-    end = time.perf_counter()
     session.quit()
-    time_taken = end - start
-    running_test = round(time_taken, 3)
 
-    return render_template('home.html', running_test=running_test, protocol=protocol, server=server,
-                           server_location=server_location, packet_size=packet_size, ping_avg=ping_avg)
+
+def stcp():
+    #do something
+    print("test")
+
+
+def scp():
+    #do something
+    print("test")
+
+#def ping():
+#    global ping_avg
+#    response_list = ping(server, size=32, count=3)
+#    ping_avg = response_list.rtt_avg_ms
+#    print(ping_avg)
 
 
 if __name__ == '__main__':
