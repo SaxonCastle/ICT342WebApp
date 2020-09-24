@@ -25,6 +25,11 @@ import time
 # Define the name of the flask application
 app = Flask(__name__)
 
+
+
+
+
+
 # Define variables to be defined by the user through the WebApp
 # What protocol is used
 protocol = ""
@@ -33,9 +38,9 @@ protocol = ""
 server = ""
 # How big is the packet size
 packet_size = 0
-# Predefined file name
-# TODO: create a method to pick up the file name BUT for the ftps & scp to work it'll need to pick up the file LOCATION
-filename = 'picture.CR2'
+# Predefined file name (Only need to update it once right here, nowhere else in the program)
+# TODO: create a method to pick up the file name BUT for the sftp & scp to work it'll need to pick up the file LOCATION
+filename = 'texttest.txt'
 # What is the ping to the server
 ping_avg = 0
 # Measurement of how long it takes to complete the transfer
@@ -66,8 +71,8 @@ def begin_test():
     global server
     server = request.form['server']
 
-    global packet_size
-    packet_size = request.form['packet']
+    # global packet_size
+    # packet_size = request.form['packet']
 
     global filename
     filename = filename
@@ -99,15 +104,21 @@ def begin_test():
         end = time.perf_counter()
         time_taken_to_complete = round(end - start, 3)
 
-    elif protocol == "FTPS":
+    elif protocol == "FTP_TLS":
         start = time.perf_counter()
-        ftps()
+        ftp_tls()
+        end = time.perf_counter()
+        time_taken_to_complete = round (end - start, 3)
+
+    elif protocol == "SFTP":
+        start = time.perf_counter()
+        sftp()
         end = time.perf_counter()
         time_taken_to_complete = round(end - start, 3)
 
-    elif protocol == "FTPS_COMPRESSED":
+    elif protocol == "SFTP_COMPRESSED":
         start = time.perf_counter()
-        ftps_compressed()
+        sftp_compressed()
         end = time.perf_counter()
         time_taken_to_complete = round(end - start, 3)
 
@@ -151,12 +162,30 @@ def ftp():
         print("Unable to make a FTP connection")
 
 
-def ftps():
+def ftp_tls():
+    """A function that uses the ftplib library to ssh into the required server
+        and sends the file via ftp tls to /root/ftpinbox/
+    """
+    try:
+        print("Logging into FTP TLS")
+        session = ftplib.FTP_TLS()
+        session.connect(server, 2121)
+        session.login('user', 'password')
+        print("Login to " + server + " Successful")
+        print("Starting Transfer")
+        session.storbinary('STOR ' + filename, open(filename, 'rb'))
+        session.quit()
+        print("\nTransfer complete")
+    except:
+        print("Unable to make a FTP TLS connection")
+
+
+def sftp():
     """A function that uses the paramiko library to ssh into the required server
             and sends the file via secure ftp to /root/ftpinbox/
     """
     try:
-        print("Logging into FTPS")
+        print("Logging into SFTP")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(server, port=22, username='root', password='USC2020student', compress=False)
@@ -168,15 +197,15 @@ def ftps():
         ftp_client.close()
         print("Transfer complete")
     except:
-        print("Unable to make a FTPS connection")
+        print("Unable to make a SFTP connection")
 
 
-def ftps_compressed():
+def sftp_compressed():
     """A function that uses the paramiko library to ssh into the required server
                 and sends the file via secure ftp to /root/ftpinbox/
         """
     try:
-        print("Logging into FTPS with compression")
+        print("Logging into SFTP with compression")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(server, port=22, username='root', password='USC2020student', compress=True)
@@ -188,7 +217,7 @@ def ftps_compressed():
         ftp_client.close()
         print("Transfer complete")
     except:
-        print("Unable to make a FTPS connection")
+        print("Unable to make a SFTP connection")
 
 
 def scp():

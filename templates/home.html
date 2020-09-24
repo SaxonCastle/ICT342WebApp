@@ -70,28 +70,15 @@
         DROP DOWN BOX STYLES
     -------------------------*/
 
-.dropbtn {
-  background-color: #282A3E;
-  color: #fffafa;
-    margin-top: 16px;
-  padding: 16px;
-  font-size: 16px;
-  border: none;
-}
-
-.dropdown {
+select {
+    background-color: darkslategray;
+    color: #fff;
     margin: 16px;
-  position: relative;
-  display: inline-flex;
-}
-
-.dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #fffafa;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
+    padding: 16px;
+    font-size: 16px;
+    border: black;
+    position: relative;
+    display: inline-flex;
 }
 
 .dropdown-content a {
@@ -103,9 +90,9 @@
 
 .dropdown-content a:hover {background-color: #fffafa;}
 
-.dropdown:hover .dropdown-content {display: block;}
+.dropdown:hover .dropdown option {display: block;}
 
-.dropdown:hover .dropbtn {background-color: #282A3E;}
+.dropdown:hover .dropdown option {background-color: #282A3E;}
 
 .beginButton:hover {
     color: #fffafa;
@@ -215,8 +202,9 @@ button {
                         <label for="protocol" >Select Protocol</label>
                         <select id="protocol" name="protocol">
                             <option value="FTP">FTP</option>
-                            <option value="FTPS">FTPS</option>
-                            <option value="FTPS_COMPRESSED">FTPS - Compressed</option>
+                            <option value="FTP_TLS">FTP TLS</option>
+                            <option value="SFTP">SFTP</option>
+                            <option value="SFTP_COMPRESSED">SFTP - Compressed</option>
                             <option value="SCP">SCP</option>
                             <option value="SCP_COMPRESSED">SCP - Compressed</option>
                         </select>
@@ -235,22 +223,22 @@ button {
     {#         SLIDER CODE           #}
     {#                               #}-->
 
-                <div class="slidecontainer">
-                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="packet">
-                        <div class="left color">
-                            <p>Packet Size: <span id="demo"></span></p>
-                        </div>
-                </div>
-
-                <script>
-                    var slider = document.getElementById("myRange");
-                    var output = document.getElementById("demo");
-                    output.innerHTML = slider.value;
-
-                    slider.oninput = function() {
-                        output.innerHTML = this.value;
-                    }
-                </script>
+{#                <div class="slidecontainer">#}
+{#                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="packet">#}
+{#                        <div class="left color">#}
+{#                            <p>Packet Size: <span id="demo"></span></p>#}
+{#                        </div>#}
+{#                </div>#}
+{##}
+{#                <script>#}
+{#                    var slider = document.getElementById("myRange");#}
+{#                    var output = document.getElementById("demo");#}
+{#                    output.innerHTML = slider.value;#}
+{##}
+{#                    slider.oninput = function() {#}
+{#                        output.innerHTML = this.value;#}
+{#                    }#}
+{#                </script>#}
 
     <!--{#                               #}
     {#         UPLOAD FILE CODE      #}
@@ -286,15 +274,15 @@ button {
         <br>
         <h3>Protocol Used: {{ protocol }}</h3>
         <h3>Average Ping: {{ ping_avg }} ms</h3>
-        <h3>Packet Size: {{ packet_size }}</h3>
+{#        <h3>Packet Size: {{ packet_size }}</h3>#}
         <h3>Time to Complete: {{ running_test }} </h3>
 
 
-        <form>
-            <input type="checkbox" id="DownloadCSV" name="downloadToCSV" value="CSV">
-            <label for="DownloadCSV">Download to CSV</label><br>
-            <button class= "beginButton">Download</button>
-        </form>
+{#        <form>#}
+{#            <input type="checkbox" id="DownloadCSV" name="downloadToCSV" value="CSV">#}
+{#            <label for="DownloadCSV">Download to CSV</label><br>#}
+{#            <button class= "beginButton">Download</button>#}
+{#        </form>#}
 
     </div>
 </div>
