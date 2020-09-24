@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request
 import ftplib
+import paramiko
 from pythonping import ping
+from scp import SCPClient
+
 import time
 
 app = Flask(__name__)
@@ -14,6 +17,7 @@ ping_avg = 0
 running_test = 0.0
 
 
+
 @app.route('/')
 @app.route('/home')
 def home():
@@ -23,7 +27,7 @@ def home():
 @app.route("/buttonClick/", methods=['POST'])
 def begin_test():
 
-    #Make varibles global and set values accoridly to HTML webpage
+#   Make varibles global and set values accoridly to HTML webpage
     global protocol
     protocol = request.form['protocol']
     global server
@@ -58,9 +62,9 @@ def begin_test():
         end = time.perf_counter()
         time_taken = end - start
         running_test = round(time_taken, 3)
-    elif protocol == "STCP":
+    elif protocol == "SFTP":
         start = time.perf_counter()
-        stcp()
+        ftps()
         end = time.perf_counter()
         time_taken = end - start
         running_test = round(time_taken, 3)
@@ -71,7 +75,7 @@ def begin_test():
         time_taken = end - start
         running_test = round(time_taken, 3)
 
-    return render_template('home.html', running_test=running_test, protocol=protocol, server=server,
+    return render_template('home.html', filename=filename, running_test=running_test, protocol=protocol, server=server,
                            server_location=server_location, packet_size=packet_size, ping_avg=ping_avg)
 
 
@@ -89,14 +93,32 @@ def ftp():
     session.quit()
 
 
-def stcp():
-    #do something
-    print("test")
+def ftps():
+    print("Logging into FTPS")
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(server, port=22, username='root', password='USC2020student')
+    print("Log in Successful")
+
+    print("Starting Transfer")
+    ftp_client = ssh.open_sftp()
+    ftp_client.put(filename, '/root/ftpinbox/' + filename)
+    ftp_client.close()
+    print("Transfer complete")
 
 
 def scp():
-    #do something
-    print("test")
+    print("Logging into SCP")
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(server, port=22, username='root', password='USC2020student')
+    ssh.load_system_host_keys()
+    print("Log in Successful")
+
+    print("Starting Transfer")
+    scp_put = SCPClient(ssh.get_transport())
+    scp_put.put(filename, remote_path='/root/ftpinbox/'+ filename)
+    print("Transfer complete")
 
 #def ping():
 #    global ping_avg

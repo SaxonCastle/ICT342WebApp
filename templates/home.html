@@ -214,8 +214,8 @@ button {
                 <div class="dropdown">
                         <label for="protocol" >Select Protocol</label>
                         <select id="protocol" name="protocol">
-                            <option value="FTP">TCP</option>
-                            <option value="STCP">STCP</option>
+                            <option value="FTP">FTP</option>
+                            <option value="FTP-S">FTP-S</option>
                             <option value="SCP">SCP</option>
                         </select>
                 </div>
@@ -277,7 +277,7 @@ button {
 <div class="split right">
     <div class="centered">
         <h1>Results will print here</h1>
-        <h3>File name: </h3>
+        <h3>File name: {{ filename }}</h3>
         <h3>Sent to: {{ server_location }}</h3>
         <h3>Server ip: {{ server }}</h3>
         <h3>Network status: </h3>
