@@ -190,7 +190,7 @@ button {
     <div class="split left">
         <div class="centered">
             <div class="left color">
-                <h1>Please Select Variables To Alter</h1>
+                <h1>Alterable Variables</h1>
             </div>
 
             <form action="/buttonClick/" method="post">
@@ -199,7 +199,7 @@ button {
     {#         DROPDOWN BOX CODE     #}
     {#                               #}-->
                 <div class="dropdown">
-                        <label for="protocol" >Select Protocol</label>
+                        <label for="protocol" >Select Protocol: </label>
                         <select id="protocol" name="protocol">
                             <option value="FTP">FTP</option>
                             <option value="FTP_TLS">FTP TLS</option>
@@ -211,7 +211,7 @@ button {
                 </div>
                     <br>
                 <div class="dropdown">
-                    <label for="server" >Select Server</label>
+                    <label for="server" >Select Server: </label>
                     <select id="server" name="server">
                         <option value="172.105.191.25">Sydney</option>
                         <option value="139.162.15.145">Singapore</option>
@@ -254,6 +254,7 @@ button {
     {#         BEGIN TEST CODE       #}
     {#                               #}-->
 
+                <h2>Press Begin Test Button To Test</h2>
                 <button name="beginButton" class="beginButton"type="submit">Begin Test</button>
             </form>
         </div>
@@ -266,16 +267,17 @@ button {
 
 <div class="split right">
     <div class="centered">
-        <h1>Results will print here</h1>
-        <h3>File name: {{ filename }}</h3>
-        <h3>Sent to: {{ server_location }}</h3>
-        <h3>Server ip: {{ server }}</h3>
-        <h3>Network status: </h3>
+        <h1>Results</h1>
         <br>
-        <h3>Protocol Used: {{ protocol }}</h3>
-        <h3>Average Ping: {{ ping_avg }} ms</h3>
+        <br>
+        <h2>File Name: {{ filename }}</h2>
+        <h2>Selected Server: {{ server_location }}</h2>
+        <h2>Server Address: {{ server }}</h2>
+        <br>
+        <h2>Protocol Used: {{ protocol }}</h2>
+        <h2>Average Ping: {{ ping_avg }} ms</h2>
 {#        <h3>Packet Size: {{ packet_size }}</h3>#}
-        <h3>Time to Complete: {{ running_test }} </h3>
+        <h2>Time to Complete: {{ running_test }} </h2>
 
 
 {#        <form>#}
