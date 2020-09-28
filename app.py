@@ -40,7 +40,7 @@ server = ""
 packet_size = 0
 # Predefined file name (Only need to update it once right here, nowhere else in the program)
 # TODO: create a method to pick up the file name BUT for the sftp & scp to work it'll need to pick up the file LOCATION
-filename = 'texttest.txt'
+filename = ""
 # What is the ping to the server
 ping_avg = 0
 # Measurement of how long it takes to complete the transfer
@@ -72,9 +72,6 @@ def begin_test():
 
     # global packet_size
     # packet_size = request.form['packet']
-
-    global filename
-    filename = filename
 
     global time_taken_to_complete
     time_taken_to_complete = 0.0
@@ -148,6 +145,9 @@ def ftp():
         and sends the file via plain ftp to /root/ftpinbox/
     """
     try:
+        global filename
+        filename = request.form['filename']
+
         print("Logging into FTP")
         session = ftplib.FTP()
         session.connect(server, 2121)
@@ -166,6 +166,9 @@ def ftp_tls():
         and sends the file via ftp tls to /root/ftpinbox/
     """
     try:
+        global filename
+        filename = request.form['filename']
+
         print("Logging into FTP TLS")
         session = ftplib.FTP_TLS()
         session.connect(server, 2121)
@@ -184,6 +187,9 @@ def sftp():
             and sends the file via secure ftp to /root/ftpinbox/
     """
     try:
+        global filename
+        filename = request.form['filename']
+
         print("Logging into SFTP")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -204,6 +210,9 @@ def sftp_compressed():
                 and sends the file via secure ftp to /root/ftpinbox/
         """
     try:
+        global filename
+        filename = request.form['filename']
+
         print("Logging into SFTP with compression")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -224,6 +233,9 @@ def scp():
                 and sends the file via Secure Copy Protocol (SCP) to /root/ftpinbox/
     """
     try:
+        global filename
+        filename = request.form['filename']
+
         print("Logging into SCP")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -244,6 +256,9 @@ def scp_compressed():
                 and sends the file via Secure Copy Protocol (SCP) to /root/ftpinbox/
     """
     try:
+        global filename
+        filename = request.form['filename']
+
         print("Logging into SCP with compression")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
