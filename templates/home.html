@@ -245,17 +245,21 @@ button {
     {#                               #}-->
 
                 <div class="left color">
-                    <label for="myfile">Select a file:</label>
-
-                    <input type="file" id="myfile" name="myfile"><br><br>
-                </div>
+                    <div class="dropdown">
+                        <label for="server" >Select File: </label>
+                        <select id="file" name="file">
+                            <option value="">500mb</option>
+                            <option value="">1gb</option>
+                            <option value="">3mb</option>
+                        </select>
+                    </div>
 
     <!--{#                               #}
     {#         BEGIN TEST CODE       #}
     {#                               #}-->
 
-                <h2>Press Begin Test Button To Test</h2>
-                <button name="beginButton" class="beginButton"type="submit">Begin Test</button>
+                    <button name="beginButton" class="beginButton"type="submit">Begin Test</button>
+                </div>
             </form>
         </div>
     </div>

@@ -57,7 +57,6 @@ def home():
     return render_template('home.html')
 
 
-
 @app.route("/buttonClick/", methods=['POST'])
 def begin_test():
     """
