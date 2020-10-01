@@ -20,15 +20,13 @@ import ftplib
 import paramiko
 from pythonping import ping
 from scp import SCPClient
+import datetime
 import time
+from time import strftime, gmtime
+import csv
 
 # Define the name of the flask application
 app = Flask(__name__)
-
-
-
-
-
 
 # Define variables to be defined by the user through the WebApp
 # What protocol is used
@@ -36,15 +34,19 @@ protocol = ""
 # What server is used
 # TODO: to persist with the protocol/server selection through tests
 server = ""
+server_location = ""
 # How big is the packet size
 packet_size = 0
 # Predefined file name (Only need to update it once right here, nowhere else in the program)
-# TODO: create a method to pick up the file name BUT for the sftp & scp to work it'll need to pick up the file LOCATION
 filename = ""
 # What is the ping to the server
 ping_avg = 0
 # Measurement of how long it takes to complete the transfer
 time_taken_to_complete = 0.0
+# Set the date of the test
+date = ""
+# Set the current time of the test
+current_time = ""
 
 
 @app.route('/')
@@ -64,18 +66,19 @@ def begin_test():
     :return: the same template as the landing page, but interacts through POST method to update the values
     """
     #   Make variables global and set values accordingly to HTML webpage
-    global protocol
+    global protocol, time_taken_to_complete
     protocol = request.form['protocol']
 
     global server
     server = request.form['server']
 
-    # global packet_size
-    # packet_size = request.form['packet']
+    global date
+    date = strftime("%a, %d %b %Y")
 
-    global time_taken_to_complete
-    time_taken_to_complete = 0.0
+    global current_time
+    current_time = strftime("%X")
 
+    global server_location
     # server == server selected by user in webapp
     if server == "172.105.191.25":
         server_location = "Sydney"
@@ -99,36 +102,42 @@ def begin_test():
         ftp()
         end = time.perf_counter()
         time_taken_to_complete = round(end - start, 3)
+        write_to_csv()
 
     elif protocol == "FTP_TLS":
         start = time.perf_counter()
         ftp_tls()
         end = time.perf_counter()
-        time_taken_to_complete = round (end - start, 3)
+        time_taken_to_complete = round(end - start, 3)
+        write_to_csv()
 
     elif protocol == "SFTP":
         start = time.perf_counter()
         sftp()
         end = time.perf_counter()
         time_taken_to_complete = round(end - start, 3)
+        write_to_csv()
 
     elif protocol == "SFTP_COMPRESSED":
         start = time.perf_counter()
         sftp_compressed()
         end = time.perf_counter()
         time_taken_to_complete = round(end - start, 3)
+        write_to_csv()
 
     elif protocol == "SCP":
         start = time.perf_counter()
         scp()
         end = time.perf_counter()
         time_taken_to_complete = round(end - start, 3)
+        write_to_csv()
 
     elif protocol == "SCP_COMPRESSED":
         start = time.perf_counter()
         scp_compressed()
         end = time.perf_counter()
         time_taken_to_complete = round(end - start, 3)
+        write_to_csv()
 
     return render_template('home.html',
                            filename=filename,
@@ -152,11 +161,10 @@ def ftp():
         session = ftplib.FTP()
         session.connect(server, 2121)
         session.login('user', 'password')
-        print("Login to " + server + " Successful")
-        print("Starting Transfer")
         session.storbinary('STOR ' + filename, open(filename, 'rb'))
         session.quit()
-        print("\nTransfer complete")
+        print("Transfer complete")
+
     except:
         print("Unable to make a FTP connection")
 
@@ -172,12 +180,13 @@ def ftp_tls():
         print("Logging into FTP TLS")
         session = ftplib.FTP_TLS()
         session.connect(server, 2121)
-        session.login('user', 'password')
+        session.sendcmd('USER user')
+        session.sendcmd('Pass password')
         print("Login to " + server + " Successful")
-        print("Starting Transfer")
         session.storbinary('STOR ' + filename, open(filename, 'rb'))
         session.quit()
-        print("\nTransfer complete")
+        print("Transfer complete")
+
     except:
         print("Unable to make a FTP TLS connection")
 
@@ -193,7 +202,11 @@ def sftp():
         print("Logging into SFTP")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(server, port=22, username='root', password='USC2020student', compress=False)
+        ssh.connect(server,
+                    port=22,
+                    username='root',
+                    password='USC2020student',
+                    compress=False)
         print("Login to " + server + " Successful")
 
         print("Starting Transfer")
@@ -201,6 +214,7 @@ def sftp():
         ftp_client.put(filename, '/root/ftpinbox/' + filename)
         ftp_client.close()
         print("Transfer complete")
+
     except:
         print("Unable to make a SFTP connection")
 
@@ -216,7 +230,11 @@ def sftp_compressed():
         print("Logging into SFTP with compression")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(server, port=22, username='root', password='USC2020student', compress=True)
+        ssh.connect(server,
+                    port=22,
+                    username='root',
+                    password='USC2020student',
+                    compress=True)
         print("Login to " + server + " Successful")
 
         print("Starting Transfer")
@@ -224,6 +242,7 @@ def sftp_compressed():
         ftp_client.put(filename, '/root/ftpinbox/' + filename)
         ftp_client.close()
         print("Transfer complete")
+
     except:
         print("Unable to make a SFTP connection")
 
@@ -239,7 +258,11 @@ def scp():
         print("Logging into SCP")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(server, port=22, username='root', password='USC2020student', compress=False)
+        ssh.connect(server,
+                    port=22,
+                    username='root',
+                    password='USC2020student',
+                    compress=False)
         ssh.load_system_host_keys()
         print("Login to " + server + " Successful")
 
@@ -247,6 +270,7 @@ def scp():
         scp_put = SCPClient(ssh.get_transport())
         scp_put.put(filename, remote_path='/root/ftpinbox/' + filename)
         print("Transfer complete")
+
     except:
         print("Unable to make a SCP connection")
 
@@ -262,7 +286,11 @@ def scp_compressed():
         print("Logging into SCP with compression")
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(server, port=22, username='root', password='USC2020student', compress=True)
+        ssh.connect(server,
+                    port=22,
+                    username='root',
+                    password='USC2020student',
+                    compress=True)
         ssh.load_system_host_keys()
         print("Login to " + server + " Successful")
 
@@ -270,8 +298,17 @@ def scp_compressed():
         scp_put = SCPClient(ssh.get_transport())
         scp_put.put(filename, remote_path='/root/ftpinbox/' + filename)
         print("Transfer complete")
+
     except:
         print("Unable to make a SCP connection")
+
+
+def write_to_csv():
+    with open('results.csv', mode='a', newline='') as results_file:
+        results_writer = csv.writer(results_file,
+                                    delimiter=',',)
+
+        results_writer.writerow([date, current_time, time_taken_to_complete, protocol, ping_avg, "Saxon", "Desktop", filename, server_location])
 
 
 if __name__ == '__main__':
