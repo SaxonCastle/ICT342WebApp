@@ -43,3 +43,7 @@ Date,Time,Time to Complete,Protocol,Ping(ms),Location,Device,Filename,Server Des
 "Mon, 05 Oct 2020",22:21:56,15.51,FTP,37.18,Saxon,Desktop,511mb_test_video.mkv,Sydney
 "Mon, 05 Oct 2020",22:23:42,41.087,SCP,39.91,Saxon,Desktop,511mb_test_video.mkv,Sydney
 "Mon, 05 Oct 2020",22:25:18,43.345,SFTP,34.06,Saxon,Desktop,511mb_test_video.mkv,Sydney
+"Mon, 05 Oct 2020",22:34:03,0.312,FTP,30.69,Saxon,Desktop,texttest.txt,Sydney
+"Mon, 05 Oct 2020",22:34:07,15.703,FTP,32.46,Saxon,Desktop,511mb_test_video.mkv,Sydney
+"Mon, 05 Oct 2020",22:38:35,15.501,FTP,30.23,Saxon,Desktop,511mb_test_video.mkv,Sydney
+"Mon, 05 Oct 2020",22:39:30,15.662,FTP,32.44,Saxon,Desktop,511mb_test_video.mkv,Sydney

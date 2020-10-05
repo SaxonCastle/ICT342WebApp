@@ -100,51 +100,10 @@ select {
 }
 
 
-    /*-------------------------
-         SLIDER STYLES
-    -------------------------*/
+.minutes {
 
-    .slidecontainer {
-    width: 70%; /* Width of the outside container */
-    margin: auto;
 }
 
-/* The slider itself */
-.slider {
-  -webkit-appearance: none;  /* Override default CSS styles */
-  appearance: none;
-  width: 100%; /* Full-width */
-  height: 25px; /* Specified height */
-  background: #fffafa; /* Snow background */
-  outline: none; /* Remove outline */
-  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-  transition: opacity .2s;
-  position: center;
-  align-items: center;
-}
-
-/* Mouse-over effects */
-.slider:hover {
-  opacity: 1; /* Fully shown on mouse-over */
-}
-
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-.slider::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
-  appearance: none;
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: #282A3E; /* Dark Blue background */
-  cursor: pointer; /* Cursor on hover */
-}
-
-.slider::-moz-range-thumb {
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: #282A3E; /* Dark Blue background */
-  cursor: pointer; /* Cursor on hover */
-}
 
     /*-------------------------
          TEXT  STYLES
@@ -177,6 +136,12 @@ button {
     font-size: 24px;
     border-radius: 6%;
 }
+
+#minutes, #seconds, #hours {
+    font-size: 32px;
+    border-radius: 6%;
+     padding: 6px 6px;
+    }
 </style>
 </head>
 
@@ -255,7 +220,7 @@ button {
                     <input type="radio" id="Repeat" name="bulktest" value="Repeat">
                     <label for="Repeat">Repeat</label><br>
 
-                    <button name="beginButton" class="beginButton"type="submit" onclick="startTimer()">Begin Test</button>
+                    <button name="beginButton" class="beginButton" type="submit" onclick="startTimer()">Begin Test</button>
 
                 </div>
 
@@ -271,7 +236,9 @@ button {
                     }, 1000);
                     }
                     </script>
-                    <span id="minutes">00</span>:<span id="seconds">00</span>
+                <h3>minutes : seconds</h3>
+                <span id="minutes">00</span>:<span id="seconds">00</span>
+
 
 
 
