@@ -28,7 +28,6 @@
   z-index: 1;
   top: 0;
   overflow-x: hidden;
-  padding-top: 20px;
 }
 
 /* Control the left side */
@@ -70,15 +69,16 @@
         DROP DOWN BOX STYLES
     -------------------------*/
 
+.dropdown {
+    color: black;
+}
+
 select {
-    background-color: darkslategray;
-    color: #fff;
-    margin: 16px;
-    padding: 16px;
-    font-size: 16px;
-    border: black;
-    position: relative;
-    display: inline-flex;
+    border-radius:36px;
+    display:inline-block;
+    overflow:hidden;
+    background:lightblue;
+    border:3px solid lightblue;
 }
 
 .dropdown-content a {
@@ -99,26 +99,16 @@ select {
     background-color:#282A3E;
 }
 
-
-.minutes {
-
-}
-
-
     /*-------------------------
          TEXT  STYLES
   -------------------------*/
 
-body {
-	font-family: roboto;
-	font: 'roboto slab';
-}
-.color {
-    color: #282A3E;
+body, h2, p, button {
+	font-family: 'Roboto Slab', serif;
 }
 
-p {
-  font-size: 30px;
+h2, p {
+  font-size: 20px;
 }
 
 
@@ -129,6 +119,7 @@ label {
 button {
     border: none;
     color: #282A3E;
+    margin-top: 32px;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -137,10 +128,14 @@ button {
     border-radius: 6%;
 }
 
-#minutes, #seconds, #hours {
+#minutes, #seconds {
     font-size: 32px;
     border-radius: 6%;
      padding: 6px 6px;
+    }
+
+#protocol, #server, #filename, #bulk_repeat {
+    font-size: 20px;
     }
 </style>
 </head>
@@ -148,7 +143,7 @@ button {
 <body>
 
 <!--{#*******************************#}
-{#        LEFT HAND SIDE         #}
+{#        LEFT HAND SIDE OBJECTS         #}
 {#*******************************#}-->
 
 <div class="flex-container">
@@ -183,12 +178,7 @@ button {
                         <option value="45.33.27.236">Texas</option>
                     </select>
                 </div>
-
-
-    <!--{#                               #}
-    {#         UPLOAD FILE CODE      #}
-    {#                               #}-->
-
+                <br>
                 <div class="left color">
                     <div class="dropdown">
                         <label for="filename" >Select File: </label>
@@ -198,16 +188,17 @@ button {
                             <option value="2gb_test_video.mp4">2gb</option>
                             <option value="6gb_test_video.mp4">6gb</option>
                         </select>
-                    </div>
-
-                    <div class="dropdown">
-                        <label for="bulk_repeat" >Time to loop (Repeat only): </label>
-                        <select id="bulk_repeat" name="bulk_repeat">
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                        </select>
-                    </div>
+                </div>
+                <br>
+                <div class="dropdown">
+                    <label for="bulk_repeat" >Time to loop (Repeat only): </label>
+                    <select id="bulk_repeat" name="bulk_repeat">
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+                <br>
 
     <!--{#                               #}
     {#         BEGIN TEST CODE       #}
@@ -236,13 +227,9 @@ button {
                     }, 1000);
                     }
                     </script>
+                <h2>Time Elapsed</h2>
                 <h3>minutes : seconds</h3>
                 <span id="minutes">00</span>:<span id="seconds">00</span>
-
-
-
-
-
             </form>
         </div>
     </div>
@@ -256,15 +243,14 @@ button {
     <div class="centered">
         <h1>Results</h1>
         <br>
+
+        <h3>File Name: {{ filename }}</h3>
+        <h3>Selected Server: {{ server_location }}</h3>
+        <h3>Server Address: {{ server }}</h3>
         <br>
-        <h2>File Name: {{ filename }}</h2>
-        <h2>Selected Server: {{ server_location }}</h2>
-        <h2>Server Address: {{ server }}</h2>
-        <br>
-        <h2>Protocol Used: {{ protocol }}</h2>
-        <h2>Average Ping: {{ ping_avg }} ms</h2>
-{#        <h3>Packet Size: {{ packet_size }}</h3>#}
-        <h2>Time to Complete: {{ running_test }} </h2>
+        <h3>Protocol Used: {{ protocol }}</h3>
+        <h3>Average Ping: {{ ping_avg }} milliseconds</h3>
+        <h3>Time to Complete (Seconds): {{ running_test }} </h3>
 
 
     </div>

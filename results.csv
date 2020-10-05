@@ -1,4 +1,4 @@
-Date,Time,Time to Complete,Protocol,Ping(ms),Location,Device,Filename,Server Destination
+Date,Start time (24Hour),Time to Complete (Seconds),Protocol,Ping(ms),Location,Device,Filename,Server Destination
 "Fri, 02 Oct 2020",01:22:31,0,FTP,32.77,Saxon,Desktop,texttest.txt,Sydney
 "Fri, 02 Oct 2020",01:22:36,0,SCP,31.33,Saxon,Desktop,texttest.txt,Sydney
 "Fri, 02 Oct 2020",01:24:50,0,FTP,32.47,Saxon,Desktop,texttest.txt,Sydney
@@ -47,3 +47,10 @@ Date,Time,Time to Complete,Protocol,Ping(ms),Location,Device,Filename,Server Des
 "Mon, 05 Oct 2020",22:34:07,15.703,FTP,32.46,Saxon,Desktop,511mb_test_video.mkv,Sydney
 "Mon, 05 Oct 2020",22:38:35,15.501,FTP,30.23,Saxon,Desktop,511mb_test_video.mkv,Sydney
 "Mon, 05 Oct 2020",22:39:30,15.662,FTP,32.44,Saxon,Desktop,511mb_test_video.mkv,Sydney
+"Mon, 05 Oct 2020",22:56:20,1.342,SCP,30.91,Saxon,Desktop,texttest.txt,Sydney
+"Mon, 05 Oct 2020",22:56:35,2.225,SCP,121.45,Saxon,Desktop,texttest.txt,Singapore
+"Mon, 05 Oct 2020",22:56:42,3.864,SCP,227.36,Saxon,Desktop,texttest.txt,Texas
+"Mon, 05 Oct 2020",22:56:58,36.661,SCP,30.1,Saxon,Desktop,511mb_test_video.mkv,Sydney
+"Mon, 05 Oct 2020",22:57:46,118.37,SCP,121.2,Saxon,Desktop,511mb_test_video.mkv,Singapore
+"Mon, 05 Oct 2020",22:59:51,208.471,SCP,227.98,Saxon,Desktop,511mb_test_video.mkv,Texas
+"Mon, 05 Oct 2020",23:04:16,1101.357,SCP,30.19,Saxon,Desktop,2gb_test_video.mp4,Sydney
