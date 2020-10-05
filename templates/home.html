@@ -219,26 +219,6 @@ button {
                     </select>
                 </div>
 
-    <!--{#                               #}
-    {#         SLIDER CODE           #}
-    {#                               #}-->
-
-{#                <div class="slidecontainer">#}
-{#                    <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="packet">#}
-{#                        <div class="left color">#}
-{#                            <p>Packet Size: <span id="demo"></span></p>#}
-{#                        </div>#}
-{#                </div>#}
-{##}
-{#                <script>#}
-{#                    var slider = document.getElementById("myRange");#}
-{#                    var output = document.getElementById("demo");#}
-{#                    output.innerHTML = slider.value;#}
-{##}
-{#                    slider.oninput = function() {#}
-{#                        output.innerHTML = this.value;#}
-{#                    }#}
-{#                </script>#}
 
     <!--{#                               #}
     {#         UPLOAD FILE CODE      #}
@@ -275,8 +255,27 @@ button {
                     <input type="radio" id="Repeat" name="bulktest" value="Repeat">
                     <label for="Repeat">Repeat</label><br>
 
-                    <button name="beginButton" class="beginButton"type="submit">Begin Test</button>
+                    <button name="beginButton" class="beginButton"type="submit" onclick="startTimer()">Begin Test</button>
+
                 </div>
+
+                <script>
+                    function startTimer() {
+                        var sec = 0;
+                        function pad(val) {
+                        return val > 9 ? val : "0" + val;
+                    }
+                    var timer = setInterval(function () {
+                        document.getElementById("seconds").innerHTML = pad(++sec % 60);
+                        document.getElementById("minutes").innerHTML = pad(parseInt(sec / 60, 10));
+                    }, 1000);
+                    }
+                    </script>
+                    <span id="minutes">00</span>:<span id="seconds">00</span>
+
+
+
+
             </form>
         </div>
     </div>
@@ -300,12 +299,6 @@ button {
 {#        <h3>Packet Size: {{ packet_size }}</h3>#}
         <h2>Time to Complete: {{ running_test }} </h2>
 
-
-{#        <form>#}
-{#            <input type="checkbox" id="DownloadCSV" name="downloadToCSV" value="CSV">#}
-{#            <label for="DownloadCSV">Download to CSV</label><br>#}
-{#            <button class= "beginButton">Download</button>#}
-{#        </form>#}
 
     </div>
 </div>
