@@ -35,6 +35,7 @@ protocol = ""
 # TODO: to persist with the protocol/server selection through tests
 server = ""
 server_location = ""
+bulk = ""
 # How big is the packet size
 packet_size = 0
 # Predefined file name (Only need to update it once right here, nowhere else in the program)
@@ -61,92 +62,189 @@ def home():
 
 @app.route("/buttonClick/", methods=['POST'])
 def begin_test():
-    """
-    This is the method for the altered landing page
-    :return: the same template as the landing page, but interacts through POST method to update the values
-    """
-    #   Make variables global and set values accordingly to HTML webpage
-    global protocol, time_taken_to_complete
-    protocol = request.form['protocol']
 
-    global server
-    server = request.form['server']
+    global bulk
+    bulk = request.form['bulktest']
+    global bulk_repeat
+    bulk_repeat = request.form['bulk_repeat']
+    if bulk == "False":
+        """
+        This is the method for the altered landing page
+        :return: the same template as the landing page, but interacts through POST method to update the values
+        """
+        #   Make variables global and set values accordingly to HTML webpage
+        global protocol, time_taken_to_complete
+        protocol = request.form['protocol']
 
-    global date
-    date = strftime("%a, %d %b %Y")
+        global server
+        server = request.form['server']
 
-    global current_time
-    current_time = strftime("%X")
+        global date
+        date = strftime("%a, %d %b %Y")
 
-    global server_location
-    # server == server selected by user in webapp
-    if server == "172.105.191.25":
+        global current_time
+        current_time = strftime("%X")
+
+        global server_location
+        # server == server selected by user in webapp
+        if server == "172.105.191.25":
+            server_location = "Sydney"
+
+        elif server == "139.162.15.145":
+            server_location = "Singapore"
+
+        elif server == "45.33.27.236":
+            server_location = "Texas"
+        else:
+            server_location = "Unknown"
+
+        # Sends 5, 32 bit pings to the selected server and displays the average in the WebApp
+        global ping_avg
+        response_list = ping(server, size=32, count=5)
+        ping_avg = response_list.rtt_avg_ms
+
+        # protocol == protocol selected by user in webapp
+        if protocol == "FTP":
+            start = time.perf_counter()
+            ftp()
+            end = time.perf_counter()
+            time_taken_to_complete = round(end - start, 3)
+            write_to_csv()
+
+        elif protocol == "FTP_TLS":
+            start = time.perf_counter()
+            ftp_tls()
+            end = time.perf_counter()
+            time_taken_to_complete = round(end - start, 3)
+            write_to_csv()
+
+        elif protocol == "SFTP":
+            start = time.perf_counter()
+            sftp()
+            end = time.perf_counter()
+            time_taken_to_complete = round(end - start, 3)
+            write_to_csv()
+
+        elif protocol == "SFTP_COMPRESSED":
+            start = time.perf_counter()
+            sftp_compressed()
+            end = time.perf_counter()
+            time_taken_to_complete = round(end - start, 3)
+            write_to_csv()
+
+        elif protocol == "SCP":
+            start = time.perf_counter()
+            scp()
+            end = time.perf_counter()
+            time_taken_to_complete = round(end - start, 3)
+            write_to_csv()
+
+        elif protocol == "SCP_COMPRESSED":
+            start = time.perf_counter()
+            scp_compressed()
+            end = time.perf_counter()
+            time_taken_to_complete = round(end - start, 3)
+            write_to_csv()
+
+        return render_template('home.html',
+                               filename=filename,
+                               running_test=time_taken_to_complete,
+                               protocol=protocol,
+                               server=server,
+                               server_location=server_location,
+                               packet_size=packet_size,
+                               ping_avg=ping_avg)
+    if bulk == "FTP":
+
+        #   Define variables for Sydney
+        protocol = "FTP"
+        date = strftime("%a, %d %b %Y")
+        server = "172.105.191.25"
         server_location = "Sydney"
-
-    elif server == "139.162.15.145":
-        server_location = "Singapore"
-
-    elif server == "45.33.27.236":
-        server_location = "Texas"
-    else:
-        server_location = "Unknown"
-
-    # Sends 5, 32 bit pings to the selected server and displays the average in the WebApp
-    global ping_avg
-    response_list = ping(server, size=32, count=5)
-    ping_avg = response_list.rtt_avg_ms
-
-    # protocol == protocol selected by user in webapp
-    if protocol == "FTP":
+        response_list = ping(server, size=32, count=5)
+        ping_avg = response_list.rtt_avg_ms
+        # FTP
+        current_time = strftime("%X")
         start = time.perf_counter()
         ftp()
         end = time.perf_counter()
         time_taken_to_complete = round(end - start, 3)
         write_to_csv()
 
-    elif protocol == "FTP_TLS":
+        #   Define variables for Singapore
+        server = "139.162.15.145"
+        server_location = "Singapore"
+        response_list = ping(server, size=32, count=5)
+        ping_avg = response_list.rtt_avg_ms
+        # FTP
+        current_time = strftime("%X")
         start = time.perf_counter()
-        ftp_tls()
+        ftp()
         end = time.perf_counter()
         time_taken_to_complete = round(end - start, 3)
         write_to_csv()
 
-    elif protocol == "SFTP":
+        #   Define variables for Texas
+        server = "45.33.27.236"
+        server_location = "Texas"
+        response_list = ping(server, size=32, count=5)
+        ping_avg = response_list.rtt_avg_ms
+        # FTP
+        current_time = strftime("%X")
         start = time.perf_counter()
-        sftp()
+        ftp()
         end = time.perf_counter()
         time_taken_to_complete = round(end - start, 3)
         write_to_csv()
 
-    elif protocol == "SFTP_COMPRESSED":
-        start = time.perf_counter()
-        sftp_compressed()
-        end = time.perf_counter()
-        time_taken_to_complete = round(end - start, 3)
-        write_to_csv()
+        return render_template('home.html',
+                               filename=filename,
+                               running_test="N/A",
+                               protocol="FTP",
+                               server="N/A",
+                               server_location="N/A",
+                               packet_size="N/A",
+                               ping_avg="N/A")
 
-    elif protocol == "SCP":
-        start = time.perf_counter()
-        scp()
-        end = time.perf_counter()
-        time_taken_to_complete = round(end - start, 3)
-        write_to_csv()
+    if bulk == "Repeat":
+        #   Define variables
+        protocol = "FTP"
+        date = strftime("%a, %d %b %Y")
 
-    elif protocol == "SCP_COMPRESSED":
-        start = time.perf_counter()
-        scp_compressed()
-        end = time.perf_counter()
-        time_taken_to_complete = round(end - start, 3)
-        write_to_csv()
+        server = request.form['server']
 
-    return render_template('home.html',
-                           filename=filename,
-                           running_test=time_taken_to_complete,
-                           protocol=protocol,
-                           server=server,
-                           server_location=server_location,
-                           packet_size=packet_size,
-                           ping_avg=ping_avg)
+        # server == server selected by user in webapp
+        if server == "172.105.191.25":
+            server_location = "Sydney"
+        elif server == "139.162.15.145":
+            server_location = "Singapore"
+        elif server == "45.33.27.236":
+            server_location = "Texas"
+        else:
+            server_location = "Unknown"
+
+        response_list = ping(server, size=32, count=5)
+        ping_avg = response_list.rtt_avg_ms
+
+        counter = 0
+        bulk_repeat = int(request.form['bulk_repeat'])
+
+        while counter < bulk_repeat:
+            start = time.perf_counter()
+            ftp()
+            end = time.perf_counter()
+            time_taken_to_complete = round(end - start, 3)
+            write_to_csv()
+            counter += 1
+
+        return render_template('home.html',
+                               filename=filename,
+                               running_test="N/A",
+                               protocol="FTP",
+                               server=server,
+                               server_location=server_location,
+                               packet_size="N/A",
+                               ping_avg=ping_avg)
 
 
 def ftp():

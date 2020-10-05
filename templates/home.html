@@ -254,9 +254,25 @@ button {
                         </select>
                     </div>
 
+                    <div class="dropdown">
+                        <label for="bulk_repeat" >Time to loop (Repeat only): </label>
+                        <select id="bulk_repeat" name="bulk_repeat">
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+
     <!--{#                               #}
     {#         BEGIN TEST CODE       #}
     {#                               #}-->
+
+                    <input type="radio" id="False" name="bulktest" value="False" checked>
+                    <label for="False">Single Test</label>
+                    <input type="radio" id="FTP" name="bulktest" value="FTP">
+                    <label for="FTP">Bulk FTP</label><br>
+                    <input type="radio" id="Repeat" name="bulktest" value="Repeat">
+                    <label for="Repeat">Repeat</label><br>
 
                     <button name="beginButton" class="beginButton"type="submit">Begin Test</button>
                 </div>
