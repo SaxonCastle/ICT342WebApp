@@ -33,13 +33,13 @@
 /* Control the left side */
 .left {
   left: 0;
-  background-color: #6A97B4;
+  background-color: #127d91;
 }
 
 /* Control the right side */
 .right {
   right: 0;
-  background-color: #2ECC71;
+  background-color: #a9f0d1;
 }
 
 /* If you want the content centered horizontally and vertically */
@@ -62,8 +62,6 @@
   width: 150px;
   border-radius: 50%;
 }
-
-
 
     /*-------------------------
         DROP DOWN BOX STYLES
@@ -103,14 +101,17 @@ select {
          TEXT  STYLES
   -------------------------*/
 
-body, h2, p, button {
+body, button{
 	font-family: 'Roboto Slab', serif;
 }
 
-h2, p {
-  font-size: 20px;
+h1 {
+    margin-bottom: 48px;
 }
 
+h2, p {
+  font-size: 30px;
+}
 
 label {
     font-size: 30px;
@@ -186,7 +187,7 @@ button {
                             <option value="texttest.txt">TextTest</option>
                             <option value="511mb_test_video.mkv">500mb</option>
                             <option value="2gb_test_video.mp4">2gb</option>
-                            <option value="6gb_test_video.mp4">6gb</option>
+                            <option value="6gb_test_video.mkv">6gb</option>
                         </select>
                 </div>
                 <br>
@@ -216,10 +217,12 @@ button {
                 </div>
 
                 <script>
+
                     function startTimer() {
                         var sec = 0;
                         function pad(val) {
                         return val > 9 ? val : "0" + val;
+
                     }
                     var timer = setInterval(function () {
                         document.getElementById("seconds").innerHTML = pad(++sec % 60);

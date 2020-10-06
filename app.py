@@ -264,7 +264,7 @@ def ftp():
         print("Transfer complete")
 
     except:
-        print("Unable to make a FTP connection")
+        print("Unable to complete using FTP connection")
 
 
 def ftp_tls():
@@ -286,7 +286,7 @@ def ftp_tls():
         print("Transfer complete")
 
     except:
-        print("Unable to make a FTP TLS connection")
+        print("Unable to complete using FTP TLS connection")
 
 
 def sftp():
@@ -314,7 +314,7 @@ def sftp():
         print("Transfer complete")
 
     except:
-        print("Unable to make a SFTP connection")
+        print("Unable to complete using SFTP connection")
 
 
 def sftp_compressed():
@@ -342,7 +342,7 @@ def sftp_compressed():
         print("Transfer complete")
 
     except:
-        print("Unable to make a SFTP connection")
+        print("Unable to complete using SFTP-C connection")
 
 
 def scp():
@@ -370,7 +370,7 @@ def scp():
         print("Transfer complete")
 
     except:
-        print("Unable to make a SCP connection")
+        print("Unable to complete using SCP connection")
 
 
 def scp_compressed():
@@ -398,7 +398,7 @@ def scp_compressed():
         print("Transfer complete")
 
     except:
-        print("Unable to make a SCP connection")
+        print("Unable to complete using SCP-C connection")
 
 
 def write_to_csv():
