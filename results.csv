@@ -67,3 +67,5 @@ Date,Start time (24Hour),Time to Complete (Seconds),Protocol,Ping(ms),Location,D
 "Tue, 06 Oct 2020",11:44:44,0.317,FTP,33.47,Saxon,Desktop,texttest.txt,Sydney
 "Tue, 06 Oct 2020",11:45:32,0.319,FTP,42.44,Saxon,Desktop,texttest.txt,Sydney
 "Tue, 06 Oct 2020",11:48:19,15.26,FTP,34.02,Saxon,Desktop,511mb_test_video.mkv,Sydney
+"Tue, 06 Oct 2020",11:57:48,0.32,FTP,35.55,Saxon,Desktop,texttest.txt,Sydney
+"Tue, 06 Oct 2020",11:58:14,0.352,FTP,32.15,Saxon,Desktop,texttest.txt,Sydney

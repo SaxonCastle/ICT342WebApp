@@ -420,6 +420,7 @@ def write_to_csv():
                                         delimiter=',',)
 
             results_writer.writerow([date, current_time, time_taken_to_complete, protocol, ping_avg, "Saxon", "Desktop", filename, server_location])
+            print("Written to CSV")
     else:
         print("Unable to write to CSV")
 
