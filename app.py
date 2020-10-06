@@ -48,6 +48,8 @@ time_taken_to_complete = 0.0
 date = ""
 # Set the current time of the test
 current_time = ""
+# Boolean to set success of transfer to write to CSV
+success = False
 
 
 @app.route('/')
@@ -137,7 +139,11 @@ def begin_test():
             scp()
             end = time.perf_counter()
             time_taken_to_complete = round(end - start, 3)
-            write_to_csv()
+            if success:
+                write_to_csv()
+                print("Written to CSV")
+            else:
+                print("Not written to csv")
 
         elif protocol == "SCP_COMPRESSED":
             start = time.perf_counter()
@@ -235,7 +241,6 @@ def begin_test():
             end = time.perf_counter()
             time_taken_to_complete = round(end - start, 3)
             write_to_csv()
-            counter += 1
 
         return render_template('home.html',
                                filename=filename,
@@ -252,7 +257,7 @@ def ftp():
         and sends the file via plain ftp to /root/ftpinbox/
     """
     try:
-        global filename
+        global filename, success
         filename = request.form['filename']
 
         print("Logging into FTP")
@@ -262,8 +267,10 @@ def ftp():
         session.storbinary('STOR ' + filename, open(filename, 'rb'))
         session.quit()
         print("Transfer complete")
+        success = True
 
     except:
+        success = False
         print("Unable to complete using FTP connection")
 
 
@@ -272,7 +279,7 @@ def ftp_tls():
         and sends the file via ftp tls to /root/ftpinbox/
     """
     try:
-        global filename
+        global filename, success
         filename = request.form['filename']
 
         print("Logging into FTP TLS")
@@ -284,6 +291,7 @@ def ftp_tls():
         session.storbinary('STOR ' + filename, open(filename, 'rb'))
         session.quit()
         print("Transfer complete")
+        success = True
 
     except:
         print("Unable to complete using FTP TLS connection")
@@ -294,7 +302,7 @@ def sftp():
             and sends the file via secure ftp to /root/ftpinbox/
     """
     try:
-        global filename
+        global filename, success
         filename = request.form['filename']
 
         print("Logging into SFTP")
@@ -312,6 +320,7 @@ def sftp():
         ftp_client.put(filename, '/root/ftpinbox/' + filename)
         ftp_client.close()
         print("Transfer complete")
+        success = True
 
     except:
         print("Unable to complete using SFTP connection")
@@ -322,7 +331,7 @@ def sftp_compressed():
                 and sends the file via secure ftp to /root/ftpinbox/
         """
     try:
-        global filename
+        global filename, success
         filename = request.form['filename']
 
         print("Logging into SFTP with compression")
@@ -340,6 +349,7 @@ def sftp_compressed():
         ftp_client.put(filename, '/root/ftpinbox/' + filename)
         ftp_client.close()
         print("Transfer complete")
+        success = True
 
     except:
         print("Unable to complete using SFTP-C connection")
@@ -350,7 +360,7 @@ def scp():
                 and sends the file via Secure Copy Protocol (SCP) to /root/ftpinbox/
     """
     try:
-        global filename
+        global filename, success
         filename = request.form['filename']
 
         print("Logging into SCP")
@@ -368,6 +378,7 @@ def scp():
         scp_put = SCPClient(ssh.get_transport())
         scp_put.put(filename, remote_path='/root/ftpinbox/' + filename)
         print("Transfer complete")
+        success = True
 
     except:
         print("Unable to complete using SCP connection")
@@ -378,7 +389,7 @@ def scp_compressed():
                 and sends the file via Secure Copy Protocol (SCP) to /root/ftpinbox/
     """
     try:
-        global filename
+        global filename, success
         filename = request.form['filename']
 
         print("Logging into SCP with compression")
@@ -396,17 +407,21 @@ def scp_compressed():
         scp_put = SCPClient(ssh.get_transport())
         scp_put.put(filename, remote_path='/root/ftpinbox/' + filename)
         print("Transfer complete")
+        success = True
 
     except:
         print("Unable to complete using SCP-C connection")
 
 
 def write_to_csv():
-    with open('results.csv', mode='a', newline='') as results_file:
-        results_writer = csv.writer(results_file,
-                                    delimiter=',',)
+    if success:
+        with open('results.csv', mode='a', newline='') as results_file:
+            results_writer = csv.writer(results_file,
+                                        delimiter=',',)
 
-        results_writer.writerow([date, current_time, time_taken_to_complete, protocol, ping_avg, "Saxon", "Desktop", filename, server_location])
+            results_writer.writerow([date, current_time, time_taken_to_complete, protocol, ping_avg, "Saxon", "Desktop", filename, server_location])
+    else:
+        print("Unable to write to CSV")
 
 
 if __name__ == '__main__':
