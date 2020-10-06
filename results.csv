@@ -63,3 +63,4 @@ Date,Start time (24Hour),Time to Complete (Seconds),Protocol,Ping(ms),Location,D
 "Tue, 06 Oct 2020",10:07:16,1.943,SCP,33.74,Saxon,Desktop,6gb_test_video.mp4,Sydney
 "Tue, 06 Oct 2020",10:07:33,33.88,SCP,32.97,Saxon,Desktop,511mb_test_video.mkv,Sydney
 "Tue, 06 Oct 2020",10:20:46,3.257,SCP_COMPRESSED,228.87,Saxon,Desktop,6gb_test_video.mp4,Texas
+"Tue, 06 Oct 2020",10:24:58,4047.027,SCP,30.43,Saxon,Desktop,6gb_test_video.mkv,Sydney
